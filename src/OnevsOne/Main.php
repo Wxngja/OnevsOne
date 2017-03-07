@@ -64,8 +64,8 @@ class Main extends PluginBase implements Listener{
   
   public function launchDuel($arena){
     if(count($this->players[$arena]) == 2){
-      $this->game[$arena][$this->players[$arena][0]->getName()] = $this->players[$arena][1];
-      $this->game[$arena][$this->players[$arena][1]->getName()] = $this->players[$arena][0];
+      $this->game[$arena][$this->players[$arena][0]->getName()] = $this->players[$arena][1]->getName();
+      $this->game[$arena][$this->players[$arena][1]->getName()] = $this->players[$arena][0]->getName();
       $this->players[$arena][1]->sendMessage("§6§l1vs1 §r§7Vous affrontez §f".$this->players[$arena][0]->getName());
       $this->players[$arena][0]->sendMessage("§6§l1vs1 §r§7Vous affrontez §f".$this->players[$arena][1]->getName());
       $this->prepareToFight($this->players[$arena][0]);
@@ -88,7 +88,7 @@ class Main extends PluginBase implements Listener{
   
   public function setWin($player, $loser, $arena){
     $this->getServer()->broadcastMessage("§6§l1vs1 §r§c".$player->getName()." §7a tué en 1vs1 §f".$loser->getName()."§7 dans l'arene §e".$arena);
-    unset($this->players[$arena][array_search($player, $this->players[$arena])], $this->game[$arena][$player->getName()], $this->players[$player->getName()]);
+    unset($this->players[$arena], $this->game[$arena], $this->players[$player->getName()]);
     $player->getInventory()->clearAll();
     $player->setHealth(20);
     $player->teleport($this->getServer()->getDefaultLevel()->getSafeSpawn());
