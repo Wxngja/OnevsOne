@@ -10,7 +10,9 @@ Ce plugin vous permet de reproduire le jeux automatisé 1vs1 sur votre serveur !
 | /duel | `<setspawns>` `<1>` | Définir le spawn 1 | `OP` | 
 | /duel | `<setspawns>` `<2>` | Définir le spawn 2 | `OP` | 
 
-## OnevsOne Comment créer un panneau pour rejoindre une arène :
+## OnevsOne Configuration :
+
+Pour créer un panneau pour rejoindre une arene `arena`, il vous suffira d'écrire à la première ligne de votre panneau [GAME] puis à la deuxième ligne, le nom de l'arène que vous avez précédemment créée.
 
 | Ligne 1 | Ligne 2 | Ligne 3 | Ligne 3 |
 | :-----: | :-------: | :---------: | :-------: |
