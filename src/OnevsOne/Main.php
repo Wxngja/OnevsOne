@@ -65,8 +65,8 @@ class Main extends PluginBase implements Listener{
   
   public function launchDuel($arena){
     if(count($this->players[$arena]) == 2){
-      $this->game[$arena][$this->players[$arena][0]->getName()] = $this->players[$arena][1]->getName();
-      $this->game[$arena][$this->players[$arena][1]->getName()] = $this->players[$arena][0]->getName();
+      $this->game[$arena][$this->players[$arena][0]->getName()] = $this->players[$arena][1];
+      $this->game[$arena][$this->players[$arena][1]->getName()] = $this->players[$arena][0];
       $this->players[$arena][1]->sendMessage("§6§l1vs1 §r§7Vous affrontez §f".$this->players[$arena][0]->getName());
       $this->players[$arena][0]->sendMessage("§6§l1vs1 §r§7Vous affrontez §f".$this->players[$arena][1]->getName());
       $this->prepareToFight($this->players[$arena][0]);
