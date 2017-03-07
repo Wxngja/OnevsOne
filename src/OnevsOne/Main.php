@@ -68,10 +68,10 @@ class Main extends PluginBase implements Listener{
       $array = array_keys($this->players[$arena]);
       $this->game[$arena][$this->players[$arena][$array[0]]->getName()] = $this->players[$arena][$array[1]];
       $this->game[$arena][$this->players[$arena][$array[1]]->getName()] = $this->players[$arena][$array[0]];
-      $this->players[$arena][1]->sendMessage("§6§l1vs1 §r§7Vous affrontez §f".$this->players[$arena][0]->getName());
-      $this->players[$arena][0]->sendMessage("§6§l1vs1 §r§7Vous affrontez §f".$this->players[$arena][1]->getName());
-      $this->prepareToFight($this->players[$arena][0]);
-      $this->prepareToFight($this->players[$arena][1]);
+      $this->players[$arena][$array[1]]->sendMessage("§6§l1vs1 §r§7Vous affrontez §f".$this->players[$arena][$array[0]]->getName());
+      $this->players[$arena][$array[0]]->sendMessage("§6§l1vs1 §r§7Vous affrontez §f".$this->players[$arena][$array[1]]->getName());
+      $this->prepareToFight($this->players[$arena][$array[0]]);
+      $this->prepareToFight($this->players[$arena][$array[1]]);
       $this->game[$arena]["statut"] = 3;
       $this->setSign($arena);
     }else{
