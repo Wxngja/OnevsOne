@@ -100,44 +100,48 @@ class Main extends PluginBase implements Listener{
     if($command->getName() == "duel"){
       if($sender instanceof Player){
         if($sender->isOp()){
-          $game = $this->config->getAll();
-          if($args[0] == "create"){
-            if(isset($args[1])){
-              $arena = $args[1];
-              $game[$arena] = array();
-              $this->config->setAll($game);
-              $this->config->save();
-              $sender->sendMessage("§6§l1vs1 §r§7Vous avez défini l'arène §e".$arena);
-            }
-          }elseif($args[0] == "setspawns"){
-            if(count($args) == 3){
-              if(isset($game[$args[1]])){
+          if(count($args) > 1){
+            $game = $this->config->getAll();
+            if($args[0] == "create"){
+              if(isset($args[1])){
                 $arena = $args[1];
-                if($args[2] == "1"){
-                  $game[$arena]["1"] = array(round($sender->getX(), 0), round($sender->getY(), 0), round($sender->getZ(), 0), $sender->getLevel()->getName());
-                  $this->config->setAll($game);
-                  $this->config->save();
-                  $sender->sendMessage("§l§61vs1 §r§7Vous avez défini le §aspawn 1");
-                }elseif($args[2] == "2"){
-                  if(isset($game[$arena]["1"])){
-                    $game[$arena]["2"] = array(round($sender->getX(), 0), round($sender->getY(), 0), round($sender->getZ(), 0), $game[$arena]["1"][3]);
+                $game[$arena] = array();
+                $this->config->setAll($game);
+                $this->config->save();
+                $sender->sendMessage("§6§l1vs1 §r§7Vous avez défini l'arène §e".$arena);
+              }
+            }elseif($args[0] == "setspawns"){
+              if(count($args) == 3){
+                if(isset($game[$args[1]])){
+                  $arena = $args[1];
+                  if($args[2] == "1"){
+                    $game[$arena]["1"] = array(round($sender->getX(), 0), round($sender->getY(), 0), round($sender->getZ(), 0), $sender->getLevel()->getName());
                     $this->config->setAll($game);
                     $this->config->save();
-                    $sender->sendMessage("§6§l1vs1 §r§7Vous avez défini le §aspawn 2");
+                    $sender->sendMessage("§l§61vs1 §r§7Vous avez défini le §aspawn 1");
+                  }elseif($args[2] == "2"){
+                    if(isset($game[$arena]["1"])){
+                      $game[$arena]["2"] = array(round($sender->getX(), 0), round($sender->getY(), 0), round($sender->getZ(), 0), $game[$arena]["1"][3]);
+                      $this->config->setAll($game);
+                      $this->config->save();
+                      $sender->sendMessage("§6§l1vs1 §r§7Vous avez défini le §aspawn 2");
+                    }else{
+                      $sender->sendMessage("§cVous devez d'abord définir le spawn 1.");
+                    }
                   }else{
-                    $sender->sendMessage("§cVous devez d'abord définir le spawn 1.");
+                    $sender->sendMessage("§cErreur d'arguments: essaie /duel {setspawns} {1/2}");
                   }
                 }else{
-                  $sender->sendMessage("§cErreur d'arguments: essaie /duel {setspawns} {1/2}");
+                  $sender->sendMessage("§cVous devez d'abord définir l'arène ".$args[1]);
                 }
               }else{
-                $sender->sendMessage("§cVous devez d'abord définir l'arène ".$args[1]);
+                $sender->sendMessage("§cErreur d'arguments: essaie /duel {setspawns} {arena} {1/2}");
               }
             }else{
-              $sender->sendMessage("§cErreur d'arguments: essaie /duel {setspawns} {arena} {1/2}");
+              $sender->sendMessage("§cErreur d'arguments: essaie /duel {create} {arena} ou /duel {setspawns} {arena} {1/2}");
             }
           }else{
-            $sender->sendMessage("§cErreur d'arguments: essaie /duel {create/setspawns} {name}");
+            $sender->sendMessage("§cErreur d'arguments: essaie /duel {create} {arena} ou /duel {setspawns} {arena} {1/2}");
           }
         }else{
           $sender->sendMessage("§cVous n'avez pas la permission d'éxécuter cette commande.");
