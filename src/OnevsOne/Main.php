@@ -44,6 +44,7 @@ class Main extends PluginBase implements Listener{
   public function setSign($arena){
     $game = $this->config->getAll();
     $tile = $this->getServer()->getLevelByName($game[$arena]["sign"][3])->getTile(new Vector3($game[$arena]["sign"][0], $game[$arena]["sign"][1], $game[$arena]["sign"][2]));
+    if(!isset($this->game[$arena])) $this->game[$arena] = array();
     if(!isset($this->game[$arena]["statut"])) $this->game[$arena]["statut"] = 1;
     if($this->game[$arena]["statut"] == 1 || $this->game[$arena]["statut"] == 2){
       $tile->setText("§l1vs1", "§r".count($this->players[$arena])."/2", "§a[Join]", "§r".$arena);
@@ -76,7 +77,7 @@ class Main extends PluginBase implements Listener{
       $this->getServer()->broadcastMessage("§cIl n y a pas assez de joueurs.", $this->players[$this->arena]);
       $this->getServer()->loadLevel($this->getServer()->getDefaultLevel()->getName());
       foreach($this->players[$arena] as $player){
-        unset($this->players[$arena][array_search($player, $this->players[$arena])], $this->players[$player->getName()]);
+        unset($this->players[$arena], $this->players[$player->getName()]);
         $player->teleport($this->getServer()->getDefaultLevel()->getSafeSpawn());
       }
       $this->getServer()->getScheduler()->cancelTask($this->game[$arena]["task"]);
@@ -92,7 +93,6 @@ class Main extends PluginBase implements Listener{
     $player->getInventory()->clearAll();
     $player->setHealth(20);
     $player->teleport($this->getServer()->getDefaultLevel()->getSafeSpawn());
-    $this->game[$arena]["statut"] = 1;
     $this->setSign($arena);
   }
   
@@ -238,7 +238,7 @@ class Main extends PluginBase implements Listener{
       if(isset($this->players[$player->getName()])){
         $arena = $this->players[$player->getName()];
         $winner = $this->game[$arena][$player->getName()];
-        unset($this->players[$arena][array_search($player, $this->players[$arena])], $this->game[$arena][$player->getName()], $this->players[$player->getName()]);
+        unset($this->players[$player->getName()]);
         $this->setWin($winner, $player, $arena);
         $event->setDrops([]);
         $event->setDeathMessage("");
@@ -259,7 +259,7 @@ class Main extends PluginBase implements Listener{
     if(isset($this->players[$player->getName()])){
       $arena = $this->players[$player->getName()];
       $winner = $this->game[$arena][$player->getName()];
-      unset($this->players[$arena][array_search($player, $this->players[$arena])], $this->game[$arena][$player->getName()], $this->players[$player->getName()]);
+      unset($this->players[$player->getName()]);
       $this->setWin($winner, $player, $arena);
     }
   }
