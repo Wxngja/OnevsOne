@@ -21,8 +21,7 @@ class GameTask extends PluginTask{
   }
 
   public function onRun($currentTick){
-    $this->time--;
-    
+    $this->time--;   
     if($this->time > 0 && $this->time <= 10){
       $this->owner->getServer()->broadcastPopup("§e".$this->time, $this->owner->players[$this->arena]);
     }elseif($this->time == 0){
