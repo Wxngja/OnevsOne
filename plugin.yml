@@ -1,0 +1,15 @@
+name: OnevsOne
+main: OnevsOne\Main
+version: "1.0.0"
+api: [1.0.0]
+author: LCraftPE
+
+commands:
+  duel:
+    permission: lc.command.duel
+    description: "Commands for create an 1vs1 arena"
+    
+permissions:
+  lc.command.duel:
+    default: op
+    description: Allow /duel
