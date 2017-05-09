@@ -68,14 +68,14 @@ class Main extends PluginBase implements Listener{
       $array = array_keys($this->players[$arena]);
       $this->game[$arena][$this->players[$arena][$array[0]]->getName()] = $this->players[$arena][$array[1]];
       $this->game[$arena][$this->players[$arena][$array[1]]->getName()] = $this->players[$arena][$array[0]];
-      $this->players[$arena][$array[1]]->sendMessage("§6§l1vs1 §r§7Vous affrontez §f".$this->players[$arena][$array[0]]->getName());
-      $this->players[$arena][$array[0]]->sendMessage("§6§l1vs1 §r§7Vous affrontez §f".$this->players[$arena][$array[1]]->getName());
+      $this->players[$arena][$array[1]]->sendMessage("§6§l1vs1 §r§7You face §f".$this->players[$arena][$array[0]]->getName());
+      $this->players[$arena][$array[0]]->sendMessage("§6§l1vs1 §r§7You face §f".$this->players[$arena][$array[1]]->getName());
       $this->prepareToFight($this->players[$arena][$array[0]]);
       $this->prepareToFight($this->players[$arena][$array[1]]);
       $this->game[$arena]["statut"] = 3;
       $this->setSign($arena);
     }else{
-      $this->getServer()->broadcastMessage("§cIl n y a pas assez de joueurs.", $this->players[$this->arena]);
+      $this->getServer()->broadcastMessage("§cThere are not enough players.", $this->players[$this->arena]);
       $this->getServer()->loadLevel($this->getServer()->getDefaultLevel()->getName());
       foreach($this->players[$arena] as $player){
         unset($this->players[$arena], $this->players[$player->getName()]);
@@ -89,7 +89,8 @@ class Main extends PluginBase implements Listener{
   }
   
   public function setWin($player, $loser, $arena){
-    $this->getServer()->broadcastMessage("§6§l1vs1 §r§c".$player->getName()." §7a tué en 1vs1 §f".$loser->getName()."§7 dans l'arene §e".$arena);
+    $this->getServer()->broadcastMessage("§6§l1vs1 §r§c".$player->getName()." §7Killed in 1vs1 §f".$loser->getName()."§7 
+In the arena §e".$arena);
     unset($this->players[$arena], $this->game[$arena], $this->players[$player->getName()]);
     $player->getInventory()->clearAll();
     $player->setHealth(20);
@@ -109,7 +110,7 @@ class Main extends PluginBase implements Listener{
                 $game[$arena] = array();
                 $this->config->setAll($game);
                 $this->config->save();
-                $sender->sendMessage("§6§l1vs1 §r§7Vous avez défini l'arène §e".$arena);
+                $sender->sendMessage("§6§l1vs1 §r§7You have defined the arena §e".$arena);
               }
             }elseif($args[0] == "setspawns"){
               if(count($args) == 3){
@@ -125,27 +126,27 @@ class Main extends PluginBase implements Listener{
                       $game[$arena]["2"] = array(round($sender->getX(), 0), round($sender->getY(), 0), round($sender->getZ(), 0), $game[$arena]["1"][3]);
                       $this->config->setAll($game);
                       $this->config->save();
-                      $sender->sendMessage("§6§l1vs1 §r§7Vous avez défini le §aspawn 2");
+                      $sender->sendMessage("§6§l1vs1 §r§7You have defined the spawn §aspawn 2");
                     }else{
-                      $sender->sendMessage("§cVous devez d'abord définir le spawn 1.");
+                      $sender->sendMessage("§cYou must first set the spawn.");
                     }
                   }else{
-                    $sender->sendMessage("§cErreur d'arguments: essaie /duel {setspawns} {1/2}");
+                    $sender->sendMessage("§cArgument Error: Try /duel {setspawns} {1/2}");
                   }
                 }else{
-                  $sender->sendMessage("§cVous devez d'abord définir l'arène ".$args[1]);
+                  $sender->sendMessage("§cYou must first define the arena ".$args[1]);
                 }
               }else{
-                $sender->sendMessage("§cErreur d'arguments: essaie /duel {setspawns} {arena} {1/2}");
+                $sender->sendMessage("§cArgument Error: Try /duel {setspawns} {arena} {1/2}");
               }
             }else{
-              $sender->sendMessage("§cErreur d'arguments: essaie /duel {create} {arena} ou /duel {setspawns} {arena} {1/2}");
+              $sender->sendMessage("§cArgument Error: Try /duel {create} {arena} or /duel {setspawns} {arena} {1/2}");
             }
           }else{
-            $sender->sendMessage("§cErreur d'arguments: essaie /duel {create} {arena} ou /duel {setspawns} {arena} {1/2}");
+            $sender->sendMessage("§cArgument Error: Try /duel {create} {arena} or /duel {setspawns} {arena} {1/2}");
           }
         }else{
-          $sender->sendMessage("§cVous n'avez pas la permission d'éxécuter cette commande.");
+          $sender->sendMessage("§cYou do not have permission to run this command.");
         }
       }
     }
@@ -166,13 +167,13 @@ class Main extends PluginBase implements Listener{
         $event->setLine(1, "§r".count($this->players[$arena])."/2");
         $event->setLine(2, "§a[Join]");
         $event->setLine(3, "§r".$arena);
-        $player->sendMessage("§6§l1vs1 §r§7Vous avez défini le panneau pour rejoindre l'arène §e".$arena);
+        $player->sendMessage("§6§l1vs1 §r§7You have set the sign to join the arena §e".$arena);
       }else{
         $event->setLine(0, "***");
-        $event->setLine(1, "ERREUR");
+        $event->setLine(1, "ERROR");
         $event->setLine(2, "***");
         $event->setLine(3, "");
-        $player->sendMessage("§cVous devez d'abord définir l'arène ".$event->getLine(2));
+        $player->sendMessage("§cYou must first define the arena ".$event->getLine(2));
       }
     }
   }
